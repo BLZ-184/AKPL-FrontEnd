@@ -47,7 +47,7 @@ const Statistik = ({ detail, dataOrderan }) => {
   const [tahun, setTahun] = React.useState("2023");
   const getISP = async () => {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/ISP"
+      "https://akpl-backend-production.up.railway.app/ISP"
     );
     getAllOrderan(response.data.map((isp) => isp.kode));
   };
@@ -58,7 +58,7 @@ const Statistik = ({ detail, dataOrderan }) => {
     } else {
       try {
         const response = await axios.get(
-          "http://akpl-backend-production.up.railway.app/OrderTransaksi"
+          "https://akpl-backend-production.up.railway.app/OrderTransaksi"
         );
         prosesData(dataIsp, response.data);
       } catch (error) {
@@ -97,7 +97,7 @@ const Statistik = ({ detail, dataOrderan }) => {
         <div class="flex items-center gap-2">
           <div class="w-max rounded-lg bg-blue-800 p-5 text-white">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
+              xmlns="https://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"

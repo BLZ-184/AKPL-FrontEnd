@@ -15,10 +15,10 @@ const DashboardTeknisi = () => {
   console.log(data);
   const getData = async () => {
     const response2 = await axios.get(
-      "http://akpl-backend-production.up.railway.app/ISP"
+      "https://akpl-backend-production.up.railway.app/ISP"
     );
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/users"
+      "https://akpl-backend-production.up.railway.app/users"
     );
     setData({
       user: response.data.filter((user) => user.role === "User").length,

@@ -23,7 +23,7 @@ const Order = () => {
     console.log(Session.id, order.kode, PaymentMethode, idTransaksi);
     try {
       const response = await axios.post(
-        "http://akpl-backend-production.up.railway.app/OrderTransaksi",
+        "https://akpl-backend-production.up.railway.app/OrderTransaksi",
         {
           idPelanggan: Session.id,
           kodeProduk: order.kode,
@@ -43,7 +43,7 @@ const Order = () => {
   const getISP = async () => {
     try {
       const response = await axios.get(
-        "http://akpl-backend-production.up.railway.app/ISP"
+        "https://akpl-backend-production.up.railway.app/ISP"
       );
       console.log(response.data);
       setISP(response.data);

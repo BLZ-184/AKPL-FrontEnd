@@ -49,7 +49,7 @@ const StatistikData = () => {
   const getAllOrderan = async () => {
     try {
       const response = await axios.get(
-        "http://akpl-backend-production.up.railway.app/OrderTransaksi"
+        "https://akpl-backend-production.up.railway.app/OrderTransaksi"
       );
       console.log(response.data);
       setTABLE_ROWS(response.data);
@@ -60,7 +60,7 @@ const StatistikData = () => {
   const setLunas = async (id) => {
     try {
       const response = await axios.patch(
-        "http://akpl-backend-production.up.railway.app/SetLunas/" + id
+        "https://akpl-backend-production.up.railway.app/SetLunas/" + id
       );
       getAllOrderan();
       setOpen(false);
@@ -239,7 +239,7 @@ const StatistikData = () => {
           >
             <svg
               className="flex-shrink-0 w-4 h-4"
-              xmlns="http://www.w3.org/2000/svg"
+              xmlns="https://www.w3.org/2000/svg"
               width="24"
               height="24"
               viewBox="0 0 24 24"

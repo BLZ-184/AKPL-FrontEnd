@@ -28,7 +28,7 @@ const Tagihan = () => {
           >
             <svg
               className="flex-shrink-0 w-4 h-4"
-              xmlns="http://www.w3.org/2000/svg"
+              xmlns="https://www.w3.org/2000/svg"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -222,7 +222,11 @@ export const CardTagihan = ({ data, status }) => {
           </div>
           {status && (
             <div>
-              <p className={`text-xl font-semibold text-red-800 ${data.status === "Lunas" ? "text-green-800" : "text-red-800"}` }>
+              <p
+                className={`text-xl font-semibold text-red-800 ${
+                  data.status === "Lunas" ? "text-green-800" : "text-red-800"
+                }`}
+              >
                 Status : {data && data.status}
               </p>
             </div>

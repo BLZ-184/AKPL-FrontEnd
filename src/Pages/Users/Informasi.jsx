@@ -9,7 +9,7 @@ const Informasi = () => {
 
   const getISP = async () => {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/ISP"
+      "https://akpl-backend-production.up.railway.app/ISP"
     );
     console.log(response.data);
     setTABLE_ROWS(response.data);

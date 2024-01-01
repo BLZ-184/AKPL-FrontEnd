@@ -31,7 +31,7 @@ const RiwayatTransaksi = () => {
   const getRiwatatransaksi = async () => {
     try {
       const response = await axios.get(
-        "http://akpl-backend-production.up.railway.app/OrderUser/" + Session.id
+        "https://akpl-backend-production.up.railway.app/OrderUser/" + Session.id
       );
       setTABLE_ROWS(response.data);
     } catch (error) {
@@ -41,7 +41,7 @@ const RiwayatTransaksi = () => {
 
   const getTransaksiID = async (value) => {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/Transaksi/" + value
+      "https://akpl-backend-production.up.railway.app/Transaksi/" + value
     );
     console.log(response.data);
     return response.data;
@@ -146,7 +146,7 @@ const RiwayatTransaksi = () => {
               >
                 <svg
                   className="flex-shrink-0 w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="https://www.w3.org/2000/svg"
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"

@@ -54,7 +54,7 @@ export const getSessionUpdate = async () => {
   const Session = sessionData && JSON.parse(sessionData);
   try {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/users/" + Session.id
+      "https://akpl-backend-production.up.railway.app/users/" + Session.id
     );
     console.log("update", response.data);
     localStorage.setItem("Login", JSON.stringify(response.data));

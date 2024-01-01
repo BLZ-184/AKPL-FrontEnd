@@ -53,25 +53,34 @@ const DataUser = () => {
   const [filterRole, setFilterRole] = React.useState("All");
 
   const getUsers = async () => {
-    const response = await axios.get("http://akpl-backend-production.up.railway.app/users");
+    const response = await axios.get(
+      "https://akpl-backend-production.up.railway.app/users"
+    );
     console.log(response.data);
     setTABLE_ROWS(response.data);
   };
 
   const getUsersID = async (value) => {
-    const response = await axios.get("http://akpl-backend-production.up.railway.app/users/" + value);
+    const response = await axios.get(
+      "https://akpl-backend-production.up.railway.app/users/" + value
+    );
     return response.data;
   };
 
   const tambahUsers = async (value) => {
-    const response = await axios.post("http://akpl-backend-production.up.railway.app/users/", value);
+    const response = await axios.post(
+      "https://akpl-backend-production.up.railway.app/users/",
+      value
+    );
     console.log(response.data);
     setStatusCreate("Berhasil menambah data");
     setDialogSukses("md");
     return response.data;
   };
   const deleteUsersID = async (value) => {
-    const response = await axios.delete("http://akpl-backend-production.up.railway.app/users/" + value);
+    const response = await axios.delete(
+      "https://akpl-backend-production.up.railway.app/users/" + value
+    );
     console.log(response.data);
     setStatusCreate("Berhasil menghapus data");
     setDialogSukses("md");
@@ -80,7 +89,7 @@ const DataUser = () => {
 
   const editUsersID = async (value, data) => {
     const response = await axios.patch(
-      "http://akpl-backend-production.up.railway.app/users/" + value,
+      "https://akpl-backend-production.up.railway.app/users/" + value,
       data
     );
     setStatusCreate("Berhasil mengedit data");

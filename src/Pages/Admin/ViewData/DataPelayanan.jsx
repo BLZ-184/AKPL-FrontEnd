@@ -51,7 +51,7 @@ const DataPelayanan = () => {
 
   const getISP = async () => {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/ISP"
+      "https://akpl-backend-production.up.railway.app/ISP"
     );
     console.log(response.data);
     setTABLE_ROWS(response.data);
@@ -59,14 +59,14 @@ const DataPelayanan = () => {
 
   const getISPID = async (value) => {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/ISP/" + value
+      "https://akpl-backend-production.up.railway.app/ISP/" + value
     );
     return response.data;
   };
 
   const tambahISP = async (value) => {
     const response = await axios.post(
-      "http://akpl-backend-production.up.railway.app/ISP/",
+      "https://akpl-backend-production.up.railway.app/ISP/",
       value
     );
     console.log(response.data);
@@ -76,7 +76,7 @@ const DataPelayanan = () => {
   };
   const deleteISPID = async (value) => {
     const response = await axios.delete(
-      "http://akpl-backend-production.up.railway.app/ISP/" + value
+      "https://akpl-backend-production.up.railway.app/ISP/" + value
     );
     console.log(response.data);
     setStatusCreate("Berhasil menghapus data");
@@ -86,7 +86,7 @@ const DataPelayanan = () => {
 
   const editISPID = async (value, data) => {
     const response = await axios.patch(
-      "http://akpl-backend-production.up.railway.app/ISP/" + value,
+      "https://akpl-backend-production.up.railway.app/ISP/" + value,
       data
     );
     setStatusCreate("Berhasil mengedit data");

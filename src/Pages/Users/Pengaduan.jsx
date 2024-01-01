@@ -15,7 +15,7 @@ const Pengaduan = () => {
   const checkPengaduan = async () => {
     try {
       const response = await axios.get(
-        "http://akpl-backend-production.up.railway.app/Pengaduan/" + Session.id
+        "https://akpl-backend-production.up.railway.app/Pengaduan/" + Session.id
       );
       console.log(response.data);
       if (response.data.length > 0) {
@@ -37,11 +37,11 @@ const Pengaduan = () => {
     console.log(Session);
     try {
       const response = await axios.post(
-        "http://akpl-backend-production.up.railway.app/Pengaduan",
+        "https://akpl-backend-production.up.railway.app/Pengaduan",
         data
       );
       const response2 = await axios.patch(
-        "http://akpl-backend-production.up.railway.app/Pengaduan/" +
+        "https://akpl-backend-production.up.railway.app/Pengaduan/" +
           Session.id +
           "/" +
           "not"

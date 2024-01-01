@@ -14,7 +14,7 @@ export default function Login() {
   const prosesLogin = async (value) => {
     try {
       const response = await axios.post(
-        "http://akpl-backend-production.up.railway.app/login",
+        "https://akpl-backend-production.up.railway.app/login",
         value
       );
       localStorage.setItem("Login", JSON.stringify(response.data));

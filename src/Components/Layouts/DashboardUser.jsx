@@ -14,7 +14,7 @@ const DashboardUser = () => {
 
   const getPengaduan = async () => {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/Pengaduan/" + Session.id
+      "https://akpl-backend-production.up.railway.app/Pengaduan/" + Session.id
     );
     setStatusPengaduan(response.data[0].status);
   };
@@ -22,7 +22,7 @@ const DashboardUser = () => {
   const getRiwatatransaksi = async () => {
     try {
       const response = await axios.get(
-        "http://akpl-backend-production.up.railway.app/OrderUser/" + Session.id
+        "https://akpl-backend-production.up.railway.app/OrderUser/" + Session.id
       );
       setRiwayat(response.data.length);
     } catch (error) {
@@ -32,7 +32,7 @@ const DashboardUser = () => {
   const checkPengaduan = async () => {
     try {
       const response = await axios.get(
-        "http://akpl-backend-production.up.railway.app/Pengaduan/" + Session.id
+        "https://akpl-backend-production.up.railway.app/Pengaduan/" + Session.id
       );
       console.log(response.data);
       if (response.data.length > 0) {
@@ -217,7 +217,7 @@ export default DashboardUser;
 export const getTagihan = async (setTagihan, setTransaksi, idOrder) => {
   try {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/OrderID/" + idOrder
+      "https://akpl-backend-production.up.railway.app/OrderID/" + idOrder
     );
     console.log("Tagihan", response.data);
     if (response.data) {
@@ -227,7 +227,7 @@ export const getTagihan = async (setTagihan, setTransaksi, idOrder) => {
     }
     try {
       const response2 = await axios.get(
-        "http://akpl-backend-production.up.railway.app/Transaksi/" +
+        "https://akpl-backend-production.up.railway.app/Transaksi/" +
           response.data.idtransaksi
       );
       setTransaksi(response2.data);
@@ -243,7 +243,7 @@ export const getTagihan2 = async (idOrder) => {
   console.log("get", idOrder);
   try {
     const response = await axios.get(
-      "http://akpl-backend-production.up.railway.app/OrderTransaksi/" + idOrder
+      "https://akpl-backend-production.up.railway.app/OrderTransaksi/" + idOrder
     );
     console.log("Tagihan", response.data);
     if (response.data) {

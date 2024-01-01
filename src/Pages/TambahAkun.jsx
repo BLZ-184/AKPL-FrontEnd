@@ -26,7 +26,7 @@ const TambahAkun = () => {
   const handleSave = async (e) => {
     try {
       const response = await axios.post(
-        "http://akpl-backend-production.up.railway.app/users",
+        "https://akpl-backend-production.up.railway.app/users",
         akun
       );
       console.log(response);
