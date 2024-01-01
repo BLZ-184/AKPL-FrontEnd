@@ -72,7 +72,7 @@ const StatistikData = () => {
 
   return (
     <div className="w-full p-20">
-      <Statistik dataOrderan={TABLE_ROWS} />
+      <Statistik />
       <div className="space-y-12 ">
         <div className="border-b border-gray-900/10 pb-12">
           <Card className="h-72 w-full mt-10 overflow-y-auto">

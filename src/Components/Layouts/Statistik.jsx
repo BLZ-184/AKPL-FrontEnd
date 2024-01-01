@@ -42,7 +42,7 @@ const option = {
   },
 };
 
-const Statistik = ({ detail, dataOrderan }) => {
+const Statistik = ({ detail }) => {
   const [series, setSeries] = React.useState([]);
   const [tahun, setTahun] = React.useState("2023");
   const getISP = async () => {
@@ -53,17 +53,13 @@ const Statistik = ({ detail, dataOrderan }) => {
   };
 
   const getAllOrderan = async (dataIsp) => {
-    if (dataOrderan) {
-      prosesData(dataIsp, dataOrderan);
-    } else {
-      try {
-        const response = await axios.get(
-          "https://akpl-backend-production.up.railway.app/OrderTransaksi"
-        );
-        prosesData(dataIsp, response.data);
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const response = await axios.get(
+        "https://akpl-backend-production.up.railway.app/OrderTransaksi"
+      );
+      prosesData(dataIsp, response.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
