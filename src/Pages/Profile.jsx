@@ -15,7 +15,7 @@ const Profile = () => {
   const handleSave = async (e) => {
     try {
       const response = await axios.patch(
-        "http://localhost:1000/users/" + Session.id,
+        "http://akpl-backend-production.up.railway.app/users/" + Session.id,
         Session
       );
       console.log(response);

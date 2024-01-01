@@ -31,7 +31,7 @@ const RiwayatTransaksi = () => {
   const getRiwatatransaksi = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:1000/OrderUser/" + Session.id
+        "http://akpl-backend-production.up.railway.app/OrderUser/" + Session.id
       );
       setTABLE_ROWS(response.data);
     } catch (error) {
@@ -41,7 +41,7 @@ const RiwayatTransaksi = () => {
 
   const getTransaksiID = async (value) => {
     const response = await axios.get(
-      "http://localhost:1000/Transaksi/" + value
+      "http://akpl-backend-production.up.railway.app/Transaksi/" + value
     );
     console.log(response.data);
     return response.data;

@@ -8,7 +8,9 @@ const Informasi = () => {
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
 
   const getISP = async () => {
-    const response = await axios.get("http://localhost:1000/ISP");
+    const response = await axios.get(
+      "http://akpl-backend-production.up.railway.app/ISP"
+    );
     console.log(response.data);
     setTABLE_ROWS(response.data);
   };

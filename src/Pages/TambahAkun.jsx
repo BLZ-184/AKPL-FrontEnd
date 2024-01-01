@@ -25,7 +25,10 @@ const TambahAkun = () => {
 
   const handleSave = async (e) => {
     try {
-      const response = await axios.post("http://localhost:1000/users", akun);
+      const response = await axios.post(
+        "http://akpl-backend-production.up.railway.app/users",
+        akun
+      );
       console.log(response);
       setOpen(!open);
       handleOpen2();

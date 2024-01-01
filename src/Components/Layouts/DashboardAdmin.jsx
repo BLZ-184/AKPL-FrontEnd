@@ -14,12 +14,16 @@ const DashboardTeknisi = () => {
   });
   console.log(data);
   const getData = async () => {
-    const response2 = await axios.get("http://localhost:1000/ISP");
-    const response = await axios.get("http://localhost:1000/users");
+    const response2 = await axios.get(
+      "http://akpl-backend-production.up.railway.app/ISP"
+    );
+    const response = await axios.get(
+      "http://akpl-backend-production.up.railway.app/users"
+    );
     setData({
       user: response.data.filter((user) => user.role === "User").length,
       teknisi: response.data.filter((user) => user.role === "Teknisi").length,
-      layanan: response.data.length,
+      layanan: response2.data.length,
     });
     console.log(response, response2);
   };

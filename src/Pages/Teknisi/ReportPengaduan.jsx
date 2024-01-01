@@ -26,7 +26,7 @@ const ReportPengaduan = () => {
   const handleOpen = () => setOpen(!open);
   const openChat = async (value) => {
     const response = await axios.get(
-      "http://localhost:1000/Pengaduan/" + value
+      "http://akpl-backend-production.up.railway.app/Pengaduan/" + value
     );
     console.log(value, response);
     setDataDetail(response.data);
@@ -39,7 +39,9 @@ const ReportPengaduan = () => {
   }, []);
 
   const getPengaduan = async () => {
-    const response = await axios.get("http://localhost:1000/Pengaduan");
+    const response = await axios.get(
+      "http://akpl-backend-production.up.railway.app/Pengaduan"
+    );
     const uniqueIdpengaduSet = new Set();
     const uniqueId = response.data.filter((data) => {
       const { idpengadu } = data;
@@ -56,7 +58,9 @@ const ReportPengaduan = () => {
   };
 
   const getUser = async (value) => {
-    const response = await axios.get("http://localhost:1000/users");
+    const response = await axios.get(
+      "http://akpl-backend-production.up.railway.app/users"
+    );
     setdataUsers(response.data);
     return response.data;
   };
@@ -65,7 +69,7 @@ const ReportPengaduan = () => {
     console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:1000/Pengaduan",
+        "http://akpl-backend-production.up.railway.app/Pengaduan",
         data
       );
       console.log(response);
@@ -78,7 +82,10 @@ const ReportPengaduan = () => {
     console.log(data);
     try {
       const response = await axios.patch(
-        "http://localhost:1000/Pengaduan/" + data + "/" + value
+        "http://akpl-backend-production.up.railway.app/Pengaduan/" +
+          data +
+          "/" +
+          value
       );
       console.log(response);
     } catch (error) {

@@ -12,6 +12,7 @@ import Statistik from "../../Components/Layouts/Statistik";
 import axios from "axios";
 import { getTagihan2 } from "../../Components/Layouts/DashboardUser";
 import { CardTagihan, createPDF } from "../Users/Tagihan/Tagihan";
+import Modals from "../../Components/Layouts/Dialog";
 
 const TABLE_HEAD = [
   "idOrder",
@@ -30,9 +31,13 @@ const StatistikData = () => {
   const sessionData = localStorage["Login"];
   const Session = sessionData && JSON.parse(sessionData);
 
-  const [datadetail, setDataDetail] = React.useState(null);
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
-  const handleOpen3 = async (value) => {
+
+  const [datadetail, setDataDetail] = React.useState(null);
+  const [open, setOpen] = React.useState(null);
+  const [open2, setOpen2] = React.useState(null);
+
+  const handleOpen = async (value) => {
     const response = await getTagihan2(value);
     setDataDetail(response);
   };
@@ -43,7 +48,9 @@ const StatistikData = () => {
 
   const getAllOrderan = async () => {
     try {
-      const response = await axios.get("http://localhost:1000/OrderTransaksi");
+      const response = await axios.get(
+        "http://akpl-backend-production.up.railway.app/OrderTransaksi"
+      );
       console.log(response.data);
       setTABLE_ROWS(response.data);
     } catch (error) {
@@ -53,10 +60,11 @@ const StatistikData = () => {
   const setLunas = async (id) => {
     try {
       const response = await axios.patch(
-        "http://localhost:1000/SetLunas/" + id
+        "http://akpl-backend-production.up.railway.app/SetLunas/" + id
       );
-      console.log(response.data);
       getAllOrderan();
+      setOpen(false);
+      setOpen2(true);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +72,7 @@ const StatistikData = () => {
 
   return (
     <div className="w-full p-20">
-      <Statistik />
+      <Statistik dataOrderan={TABLE_ROWS} />
       <div className="space-y-12 ">
         <div className="border-b border-gray-900/10 pb-12">
           <Card className="h-72 w-full mt-10 overflow-y-auto">
@@ -103,7 +111,7 @@ const StatistikData = () => {
                     },
                     index
                   ) => (
-                    <tr key={name} className="even:bg-blue-50/50">
+                    <tr key={idtransaksi} className="even:bg-blue-50/50">
                       <td className="p-4">
                         <Typography
                           variant="small"
@@ -193,7 +201,7 @@ const StatistikData = () => {
                           variant="small"
                           color="blue-gray"
                           className="font-medium"
-                          onClick={() => handleOpen3(idOrder)}
+                          onClick={() => handleOpen(idOrder)}
                         >
                           Tagihan
                         </Typography>
@@ -207,7 +215,7 @@ const StatistikData = () => {
         </div>
       </div>
 
-      <Dialog open={datadetail} handler={handleOpen3} size="lg">
+      <Dialog open={datadetail} handler={handleOpen} size="lg">
         <DialogBody>
           {datadetail && <CardTagihan data={datadetail} />}
         </DialogBody>
@@ -216,7 +224,7 @@ const StatistikData = () => {
             variant="gradient"
             color="green"
             onClick={() => {
-              setLunas(datadetail.idtransaksi);
+              setOpen(datadetail.idtransaksi);
             }}
           >
             <span>Confirmasi Pembayaran</span>
@@ -251,13 +259,31 @@ const StatistikData = () => {
             variant="gradient"
             color="red"
             onClick={() => {
-              handleOpen3(null);
+              handleOpen(null);
             }}
           >
             <span>Close</span>
           </Button>
         </DialogFooter>
       </Dialog>
+
+      <Modals
+        open={open}
+        title={"Konfirmasi Pembayaran"}
+        handler={() => setOpen(false)}
+        setCancle={() => setOpen(false)}
+        setConfirm={() => setLunas(open)}
+      >
+        Apakah anda yakin untuk mengonfirmasi pembayaran ini?
+      </Modals>
+      <Modals
+        open={open2}
+        title={"Konfirmasi Pembayaran"}
+        handler={() => setOpen2(false)}
+        setConfirm={() => setOpen2(false)}
+      >
+        Konfirmasi Pembayaran Berhasil!
+      </Modals>
     </div>
   );
 };

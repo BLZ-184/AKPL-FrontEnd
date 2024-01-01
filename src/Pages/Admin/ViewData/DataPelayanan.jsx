@@ -50,25 +50,34 @@ const DataPelayanan = () => {
   const [filterRole, setFilterRole] = React.useState("All");
 
   const getISP = async () => {
-    const response = await axios.get("http://localhost:1000/ISP");
+    const response = await axios.get(
+      "http://akpl-backend-production.up.railway.app/ISP"
+    );
     console.log(response.data);
     setTABLE_ROWS(response.data);
   };
 
   const getISPID = async (value) => {
-    const response = await axios.get("http://localhost:1000/ISP/" + value);
+    const response = await axios.get(
+      "http://akpl-backend-production.up.railway.app/ISP/" + value
+    );
     return response.data;
   };
 
   const tambahISP = async (value) => {
-    const response = await axios.post("http://localhost:1000/ISP/", value);
+    const response = await axios.post(
+      "http://akpl-backend-production.up.railway.app/ISP/",
+      value
+    );
     console.log(response.data);
     setStatusCreate("Berhasil menambah data");
     setDialogSukses("md");
     return response.data;
   };
   const deleteISPID = async (value) => {
-    const response = await axios.delete("http://localhost:1000/ISP/" + value);
+    const response = await axios.delete(
+      "http://akpl-backend-production.up.railway.app/ISP/" + value
+    );
     console.log(response.data);
     setStatusCreate("Berhasil menghapus data");
     setDialogSukses("md");
@@ -77,7 +86,7 @@ const DataPelayanan = () => {
 
   const editISPID = async (value, data) => {
     const response = await axios.patch(
-      "http://localhost:1000/ISP/" + value,
+      "http://akpl-backend-production.up.railway.app/ISP/" + value,
       data
     );
     setStatusCreate("Berhasil mengedit data");

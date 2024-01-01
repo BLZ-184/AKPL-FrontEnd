@@ -13,7 +13,10 @@ export default function Login() {
 
   const prosesLogin = async (value) => {
     try {
-      const response = await axios.post("http://localhost:1000/login", value);
+      const response = await axios.post(
+        "http://akpl-backend-production.up.railway.app/login",
+        value
+      );
       localStorage.setItem("Login", JSON.stringify(response.data));
       navigate("/dashboard");
     } catch (error) {
