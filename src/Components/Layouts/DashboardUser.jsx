@@ -59,7 +59,37 @@ const DashboardUser = () => {
   return (
     <div className="flex flex-col gap-5">
       {console.log("tagihaan", UserData)}
-      {!UserData && (
+      {Session.idOrder ? (
+        UserData && UserData.status === "Lunas" ? (
+          <></>
+        ) : (
+          <>
+            <div>
+              <div class="relative flex flex-col text-white bg-yellow-800 shadow-md bg-clip-border rounded-xl">
+                <div class="px-6 pt-6">
+                  <h5 class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-white">
+                    Informasi
+                  </h5>
+                </div>
+                <h6 class="px-6 block font-sans text-xl antialiased font-light leading-relaxed text-inherit m-3">
+                  Silahkan lakukan Pembayaran Tagihan
+                </h6>
+                <div class="p-6 pt-0">
+                  <button
+                    class="align-middle w-full select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-white text-yellow-800 shadow-md shadow-blue-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                    type="button"
+                    onClick={() => {
+                      navigate("/Order");
+                    }}
+                  >
+                    Tagihan
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
+        )
+      ) : (
         <>
           <div>
             <div class="relative flex flex-col text-white bg-yellow-800 shadow-md bg-clip-border rounded-xl">
@@ -94,7 +124,9 @@ const DashboardUser = () => {
                 Paket Aktif
               </h5>
               <h6 class="block font-sans text-center text-2xl antialiased font-light leading-relaxed text-inherit">
-                {UserData && UserData.status === "Lunas"
+                {UserData &&
+                UserData.idOrder !== null &&
+                UserData.status === "Lunas"
                   ? UserData.kodeProduk
                   : "Inactive"}
               </h6>
