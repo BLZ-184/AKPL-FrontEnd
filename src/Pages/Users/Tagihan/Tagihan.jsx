@@ -4,6 +4,9 @@ import { getTagihan2 } from "../../../Components/Layouts/DashboardUser";
 import { formatRupiah } from "./Order";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import Modals from "../../../Components/Layouts/Dialog";
+import axios from "axios";
+import { getSessionUpdate } from "../../../App";
 
 const Tagihan = () => {
   const sessionData = localStorage["Login"];
@@ -16,6 +19,26 @@ const Tagihan = () => {
       setData(data);
     });
   }, []);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handlerOpen = () => {
+    setOpen(!open);
+  };
+  const handlerNewTagihan = async () => {
+    console.log(Session.id);
+    try {
+      const response = await axios.patch(
+        "https://akpl-backend-production.up.railway.app/setNullorder/" +
+          Session.id
+      );
+      console.log(response.data);
+      getSessionUpdate();
+      handlerOpen();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="p-12 ">
@@ -44,11 +67,25 @@ const Tagihan = () => {
             </svg>
             Download PDF
           </button>
-          <button className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+          <button
+            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+            onClick={() => {
+              handlerOpen();
+            }}
+          >
             Buat Tagihan Baru
           </button>
         </div>
       </div>
+      <Modals
+        open={open}
+        handler={handlerOpen}
+        title={"Buat Tagihan Baru"}
+        setCancle={handlerOpen}
+        setConfirm={handlerNewTagihan}
+      >
+        Apakah anda yakin untuk membuat tagihan baru?
+      </Modals>
     </div>
   );
 };
@@ -223,8 +260,10 @@ export const CardTagihan = ({ data, status }) => {
           {status && (
             <div>
               <p
-                className={`text-xl font-semibold text-red-800 ${
-                  data.status === "Lunas" ? "text-green-800" : "text-red-800"
+                className={`text-xl font-semibold ${
+                  data && data.status == "Lunas"
+                    ? "text-green-800"
+                    : "text-red-800"
                 }`}
               >
                 Status : {data && data.status}

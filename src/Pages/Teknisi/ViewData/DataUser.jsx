@@ -69,36 +69,6 @@ const DataUser = () => {
     return response.data;
   };
 
-  const tambahUsers = async (value) => {
-    const response = await axios.post(
-      "https://akpl-backend-production.up.railway.app/users/",
-      value
-    );
-    console.log(response.data);
-    setStatusCreate("Berhasil menambah data");
-    setDialogSukses("md");
-    return response.data;
-  };
-  const deleteUsersID = async (value) => {
-    const response = await axios.delete(
-      "https://akpl-backend-production.up.railway.app/users/" + value
-    );
-    console.log(response.data);
-    setStatusCreate("Berhasil menghapus data");
-    setDialogSukses("md");
-    return response.data;
-  };
-
-  const editUsersID = async (value, data) => {
-    const response = await axios.patch(
-      "https://akpl-backend-production.up.railway.app/users/" + value,
-      data
-    );
-    setStatusCreate("Berhasil mengedit data");
-    setDialogSukses("md");
-    console.log(response.data);
-    return response.data;
-  };
   const [namaFilter, setnamaFilter] = React.useState("");
 
   return (
@@ -133,33 +103,6 @@ const DataUser = () => {
             />
           </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <label
-            htmlFor="Role"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Filter Role
-          </label>
-          <div>
-            <select
-              id="Role"
-              name="Role"
-              autoComplete="Role"
-              onChange={(e) => {
-                setFilterRole(e.target.value);
-              }}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-            >
-              <option>All</option>
-              <option>User</option>
-              <option>Teknisi</option>
-              <option>Admin</option>
-            </select>
-          </div>
-        </div>
-        <div className="mr-5">
-          <button onClick={() => handleOpen4(true)}>Tambah</button>
-        </div>
       </div>
       <Card className="h-72 w-full mt-10 overflow-y-auto">
         <table className="w-full min-w-max table-auto text-left ">
@@ -187,9 +130,8 @@ const DataUser = () => {
                 ? name.toLowerCase().includes(namaFilter.toLowerCase())
                 : true
             )
-              .filter(
-                (value) => value.role === filterRole || filterRole === "All"
-              )
+              .filter((value) => value.role === "User")
+              .filter((value) => value.idOrder !== null)
               .map(({ id, name, createdAt, role }, index) => (
                 <tr key={name} className="even:bg-blue-50/50">
                   <td className="p-4">
@@ -238,26 +180,6 @@ const DataUser = () => {
                       onClick={() => handleOpen3(id)}
                     >
                       Detail
-                    </Typography>
-                    <Typography
-                      as="a"
-                      href="#"
-                      variant="small"
-                      color="blue-gray"
-                      className="font-medium"
-                      onClick={() => handleOpen(id)}
-                    >
-                      Ubah
-                    </Typography>
-                    <Typography
-                      as="a"
-                      href="#"
-                      variant="small"
-                      color="blue-gray"
-                      className="font-medium"
-                      onClick={() => handleOpen2(id)}
-                    >
-                      Hapus
                     </Typography>
                   </td>
                 </tr>
@@ -377,6 +299,19 @@ const DataUser = () => {
                     <option>Teknisi</option>
                     <option>Admin</option>
                   </select>
+                </div>
+                <h6 class="block -mb-3 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-blue-gray-900">
+                  idOrder
+                </h6>
+                <div class="relative h-11 w-full min-w-[200px]">
+                  <input
+                    placeholder={"idOrder"}
+                    name="idOrder"
+                    value={datadetail.idOrder}
+                    onChange={handleInputChange}
+                    class="peer h-full w-full rounded-md border border-blue-gray-200 border-t-transparent !border-t-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:!border-t-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                  />
+                  <label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all before:content-none after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all after:content-none peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"></label>
                 </div>
               </div>
             </div>

@@ -9,13 +9,13 @@ const TeknisiMenu = [
   },
   {
     icon: <LayoutDashboard size={20} />,
-    text: "Report Pengaduan",
-    to: "/ReportPengaduan",
+    text: "User Aktif",
+    to: "/UserAktif",
   },
   {
     icon: <LayoutDashboard size={20} />,
-    text: "Tambah Akun",
-    to: "/TambahAkun",
+    text: "Report Pengaduan",
+    to: "/ReportPengaduan",
   },
 ];
 

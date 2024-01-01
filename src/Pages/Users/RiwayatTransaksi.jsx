@@ -9,7 +9,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import axios from "axios";
-import { CardTagihan } from "./Tagihan/Tagihan";
+import { CardTagihan, createPDF } from "./Tagihan/Tagihan";
 import { getTagihan2 } from "../../Components/Layouts/DashboardUser";
 
 const TABLE_HEAD = ["id Transaksi", "Tanggal dibuat", "Produk", ""];

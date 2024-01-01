@@ -16,6 +16,7 @@ import Informasi from "./Pages/Users/Informasi";
 import Pengaduan from "./Pages/Users/Pengaduan";
 import OrderPage from "./Pages/Users/Order";
 import RiwayatTransaksi from "./Pages/Users/RiwayatTransaksi";
+import UserAktif from "./Pages/Teknisi/UserAktif";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider>
@@ -34,6 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/Informasi" element={<App Component={Informasi} />} />
         <Route path="/Pengaduan" element={<App Component={Pengaduan} />} />
         <Route path="/Order" element={<App Component={OrderPage} />} />
+        <Route path="/UserAktif" element={<App Component={UserAktif} />} />
         <Route
           path="/RiwayatTransaksi"
           element={<App Component={RiwayatTransaksi} />}

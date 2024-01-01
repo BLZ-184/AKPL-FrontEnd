@@ -25,7 +25,7 @@ const UserMenu = [
   },
   {
     icon: <Receipt size={20} />,
-    text: "Order",
+    text: "Order / Tagihan",
     to: "/Order",
   },
   {
