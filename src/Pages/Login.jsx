@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -23,6 +23,18 @@ export default function Login() {
       setMsg(error.response.data.message);
     }
   };
+
+  const prosesCheckLogin = async () => {
+    const sessionData = localStorage["Login"];
+    const Session = sessionData && JSON.parse(sessionData);
+    if (Session) {
+      navigate("/dashboard");
+    }
+  };
+
+  useEffect(() => {
+    prosesCheckLogin();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
