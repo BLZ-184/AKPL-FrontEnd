@@ -7,15 +7,19 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Select,
+  Option,
+  Input,
 } from "@material-tailwind/react";
 import axios from "axios";
 
-const TABLE_HEAD = ["ID User", "Tanggal dibuat", "Nama", "Kategori", ""];
+const TABLE_HEAD = ["ID User", "Tanggal dibuat", "Nama", "Role", ""];
 const DataUser = () => {
   const sessionData = localStorage["Login"];
   const Session = sessionData && JSON.parse(sessionData);
   const [detail, setDetail] = React.useState(null);
   const [datadetail, setDataDetail] = React.useState(null);
+  const [orderDetail, setOrderDetail] = React.useState(null);
   const [ubah, setUbah] = React.useState(null);
   const [hapus, setHapus] = React.useState(null);
   const [tambah, setTambah] = React.useState(null);
@@ -37,7 +41,9 @@ const DataUser = () => {
   };
   const handleOpen3 = async (value) => {
     const response = await getUsersID(value);
+    const response2 = await getOrderID(response?.idOrder);
     setDataDetail(response);
+    setOrderDetail(response2);
     setDetail(value);
   };
   const handleOpen4 = (value) => setTambah(value);
@@ -65,6 +71,12 @@ const DataUser = () => {
   const getUsersID = async (value) => {
     const response = await axios.get(
       "https://akpl-backend-production.up.railway.app/users/" + value
+    );
+    return response.data;
+  };
+  const getOrderID = async (value) => {
+    const response = await axios.get(
+      "https://akpl-backend-production.up.railway.app/OrderID/" + value
     );
     return response.data;
   };
@@ -113,52 +125,26 @@ const DataUser = () => {
           </p>
         </div>
         <div className="flex items-center space-x-3">
-          <label
-            htmlFor="anggota"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Cari Nama
-          </label>
-          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-            <input
-              type="text"
-              name="cariNama"
-              id="cariNama"
-              onChange={(e) => {
-                setnamaFilter(e.target.value);
-              }}
-              autoComplete="anggota"
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-              placeholder="Zayan"
-            />
-          </div>
-        </div>
-        <div className="flex items-center space-x-3">
-          <label
-            htmlFor="Role"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Filter Role
-          </label>
-          <div>
-            <select
-              id="Role"
-              name="Role"
-              autoComplete="Role"
-              onChange={(e) => {
-                setFilterRole(e.target.value);
-              }}
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-            >
-              <option>All</option>
-              <option>User</option>
-              <option>Teknisi</option>
-              <option>Admin</option>
-            </select>
-          </div>
+          <Input
+            type="text"
+            name="cariNama"
+            id="cariNama"
+            label="Cari Nama"
+            onChange={(e) => {
+              setnamaFilter(e.target.value);
+            }}
+          />
+          <Select label="Filter Role">
+            <Option onClick={() => setFilterRole("All")}>All</Option>
+            <Option onClick={() => setFilterRole("User")}>User</Option>
+            <Option onClick={() => setFilterRole("Teknisi")}>Teknisi</Option>
+            <Option onClick={() => setFilterRole("Admin")}>Admin</Option>
+          </Select>
         </div>
         <div className="mr-5">
-          <button onClick={() => handleOpen4(true)}>Tambah</button>
+          <Button color="blue" onClick={() => handleOpen4(true)}>
+            Tambah
+          </Button>
         </div>
       </div>
       <Card className="h-72 w-full mt-10 overflow-y-auto">
@@ -447,6 +433,27 @@ const DataUser = () => {
                     </tr>
                   );
                 })}
+                {orderDetail && (
+                  <Typography
+                    variant="h4"
+                    color="blue-gray"
+                    className="font-bold my-5"
+                  >
+                    Detail Order Aktif
+                  </Typography>
+                )}
+                {orderDetail &&
+                  Object.keys(orderDetail).map((key) => {
+                    if (key === "password") {
+                      return null;
+                    }
+                    return (
+                      <tr key={key}>
+                        <td>{key}</td>
+                        <td>{orderDetail[key]}</td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           )}

@@ -108,7 +108,9 @@ const DataPelayanan = () => {
           </p>
         </div>
         <div className="mr-5">
-          <button onClick={() => handleOpen4(true)}>Tambah</button>
+          <Button color="blue" onClick={() => handleOpen4(true)}>
+            Tambah
+          </Button>
         </div>
       </div>
       <Card className="h-72 w-full mt-10 overflow-y-auto">

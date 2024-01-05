@@ -71,7 +71,7 @@ const Order = () => {
   };
 
   return (
-    <div className="w-full p-20 bg-white">
+    <div className="w-full p-6 sm:p-20 bg-white">
       <div className="">
         <div className=" border-gray-900/10 pb-12 ">
           <div className="flex items-center justify-between">
