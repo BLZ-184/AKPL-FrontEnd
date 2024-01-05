@@ -28,9 +28,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="w-full p-20">
-      <div className="">
-        <div className="border-b border-gray-900/10 pb-12 ">
+    <div className="w-full p-6 sm:p-20">
+      <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+        <div className="border-b border-gray-900/10 p-6">
           <div className="flex items-center justify-between">
             <div className="">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
