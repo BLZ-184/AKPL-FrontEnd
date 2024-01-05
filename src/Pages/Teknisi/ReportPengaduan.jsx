@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Avatar,
 } from "@material-tailwind/react";
 import axios from "axios";
 
@@ -23,7 +24,11 @@ const ReportPengaduan = () => {
 
   const [msg, setMsg] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [userDetail, setUserDetail] = React.useState(null);
+  const [orderDetail, setOrderDetail] = React.useState(null);
   const handleOpen = () => setOpen(!open);
+  const handleOpen2 = () => setOpen2(!open2);
   const openChat = async (value) => {
     const response = await axios.get(
       "https://akpl-backend-production.up.railway.app/Pengaduan/" + value
@@ -37,6 +42,28 @@ const ReportPengaduan = () => {
     getPengaduan();
     getUser();
   }, []);
+
+  const getUserDetail = async (value) => {
+    console.log(value);
+    const response = await getUsersID(value);
+    const response2 = await getOrderID(response?.idOrder);
+    console.log(response, response2);
+    setUserDetail(response);
+    setOrderDetail(response2);
+  };
+
+  const getUsersID = async (value) => {
+    const response = await axios.get(
+      "https://akpl-backend-production.up.railway.app/users/" + value
+    );
+    return response.data;
+  };
+  const getOrderID = async (value) => {
+    const response = await axios.get(
+      "https://akpl-backend-production.up.railway.app/OrderID/" + value
+    );
+    return response.data;
+  };
 
   const getPengaduan = async () => {
     const response = await axios.get(
@@ -94,7 +121,7 @@ const ReportPengaduan = () => {
   };
 
   return (
-    <div className="w-full p-20">
+    <div className="w-full p-6 sm:p-20">
       <div className="space-y-12 ">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="flex items-center justify-between">
@@ -205,6 +232,31 @@ const ReportPengaduan = () => {
       <Dialog open={open} handler={handleOpen}>
         <DialogBody>
           <div className="flex flex-col items-center justify-center h-full bg-gray-100 text-gray-800">
+            <div className="flex items-center gap-3 justify-between w-full py-5 px-5">
+              <Avatar
+                size="sm"
+                variant="circular"
+                alt="tania andrew"
+                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+              />
+              <div className="-mt-px flex flex-col">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-medium"
+                >
+                  Tania Andrew
+                </Typography>
+              </div>
+              <Button
+                onClick={() => {
+                  getUserDetail(detail);
+                  handleOpen2();
+                }}
+              >
+                detail
+              </Button>
+            </div>
             <div className="flex flex-col flex-grow w-full h-[80vh] bg-white shadow-xl rounded-lg overflow-hidden">
               <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
                 {datadetail &&
@@ -281,6 +333,60 @@ const ReportPengaduan = () => {
             </div>
           </div>
         </DialogBody>
+        <Dialog open={open2} handler={handleOpen2}>
+          <DialogHeader>Detail Users</DialogHeader>
+          <DialogBody>
+            {userDetail && (
+              <table className="w-full min-w-max table-auto text-left">
+                <tbody>
+                  {Object.keys(userDetail).map((key) => {
+                    if (key === "password") {
+                      return null;
+                    }
+                    return (
+                      <tr key={key}>
+                        <td>{key}</td>
+                        <td>{userDetail[key]}</td>
+                      </tr>
+                    );
+                  })}
+                  {orderDetail && (
+                    <Typography
+                      variant="h4"
+                      color="blue-gray"
+                      className="font-bold my-5"
+                    >
+                      Detail Order Aktif
+                    </Typography>
+                  )}
+                  {orderDetail &&
+                    Object.keys(orderDetail).map((key) => {
+                      if (key === "password") {
+                        return null;
+                      }
+                      return (
+                        <tr key={key}>
+                          <td>{key}</td>
+                          <td>{orderDetail[key]}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            )}
+          </DialogBody>
+          <DialogFooter>
+            <Button
+              variant="gradient"
+              color="blue"
+              onClick={() => {
+                handleOpen2(null);
+              }}
+            >
+              <span>Close</span>
+            </Button>
+          </DialogFooter>
+        </Dialog>
       </Dialog>
     </div>
   );
