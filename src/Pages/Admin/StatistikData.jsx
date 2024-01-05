@@ -6,6 +6,9 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Input,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import React from "react";
 import Statistik from "../../Components/Layouts/Statistik";
@@ -36,6 +39,11 @@ const StatistikData = () => {
   const [datadetail, setDataDetail] = React.useState(null);
   const [open, setOpen] = React.useState(null);
   const [open2, setOpen2] = React.useState(null);
+
+  const [filterStatus, setFilterStatus] = React.useState("All");
+  const [filterTransaksi, setFilterTransaksi] = React.useState(null);
+  const [filterPelanggan, setFilterPelanggan] = React.useState("");
+  const [filterOrder, setFilterOrder] = React.useState("");
 
   const handleOpen = async (value) => {
     const response = await getTagihan2(value);
@@ -71,10 +79,65 @@ const StatistikData = () => {
   };
 
   return (
-    <div className="w-full p-20">
+    <div className="w-full p-6 sm:p-20">
       <Statistik />
       <div className="space-y-12 ">
         <div className="border-b border-gray-900/10 pb-12">
+          <div className="flex items-center justify-between mt-10">
+            <div>
+              <h2 className="text-base font-semibold leading-7 text-gray-900">
+                Data Transaksi
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-gray-600">
+                Informasi Data Transaksi
+              </p>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Input
+                type="text"
+                name="filterOrder"
+                id="filterOrder"
+                onChange={(e) => {
+                  setFilterOrder(e.target.value);
+                }}
+                autoComplete="filterOrder"
+                label="Cari id Order"
+              />
+              <Input
+                type="text"
+                name="filterpelanggan"
+                id="filterpelanggan"
+                onChange={(e) => {
+                  setFilterPelanggan(e.target.value);
+                }}
+                autoComplete="filterpelanggan"
+                label="Cari id pelanggan"
+              />
+              <Input
+                type="text"
+                name="filtertransaksi"
+                id="filtertransaksi"
+                onChange={(e) => {
+                  setFilterTransaksi(e.target.value);
+                }}
+                autoComplete="filtertransaksi"
+                label="Cari id transaksi"
+              />
+            </div>
+            <div className="flex items-center space-x-3">
+              <div>
+                <Select label="Filter Status">
+                  <Option onClick={() => setFilterStatus("All")}>All</Option>
+                  <Option onClick={() => setFilterStatus("Lunas")}>
+                    Lunas
+                  </Option>
+                  <Option onClick={() => setFilterStatus("Belum Lunas")}>
+                    Belum Lunas
+                  </Option>
+                </Select>
+              </div>
+            </div>
+          </div>
           <Card className="h-72 w-full mt-10 overflow-y-auto">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
@@ -96,119 +159,135 @@ const StatistikData = () => {
                 </tr>
               </thead>
               <tbody>
-                {TABLE_ROWS.map(
-                  (
-                    {
-                      idOrder,
-                      idPelanggan,
-                      idtransaksi,
-                      jumlah,
-                      kodeProduk,
-                      metode,
-                      name,
-                      orderCreate,
-                      status,
-                    },
-                    index
-                  ) => (
-                    <tr key={idtransaksi} className="even:bg-blue-50/50">
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {idOrder}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {idPelanggan}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {idtransaksi}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {jumlah}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {kodeProduk}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {metode}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {name}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {orderCreate.split("T")[0]}{" "}
-                          {orderCreate.split("T")[1].split(".")[0]}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {status}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          as="a"
-                          href="#"
-                          variant="small"
-                          color="blue-gray"
-                          className="font-medium"
-                          onClick={() => handleOpen(idOrder)}
-                        >
-                          Tagihan
-                        </Typography>
-                      </td>
-                    </tr>
+                {TABLE_ROWS.filter((data) =>
+                  filterStatus == "All" ? true : data.status === filterStatus
+                )
+                  .filter((data) =>
+                    filterPelanggan
+                      ? data.idPelanggan.includes(filterPelanggan)
+                      : true
                   )
-                )}
+                  .filter((data) =>
+                    filterOrder ? data.idOrder == filterOrder : true
+                  )
+                  .filter((data) =>
+                    filterTransaksi
+                      ? data.idtransaksi.includes(filterTransaksi)
+                      : true
+                  )
+                  .map(
+                    (
+                      {
+                        idOrder,
+                        idPelanggan,
+                        idtransaksi,
+                        jumlah,
+                        kodeProduk,
+                        metode,
+                        name,
+                        orderCreate,
+                        status,
+                      },
+                      index
+                    ) => (
+                      <tr key={idtransaksi} className="even:bg-blue-50/50">
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {idOrder}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {idPelanggan}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {idtransaksi}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {jumlah}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {kodeProduk}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {metode}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {name}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {orderCreate.split("T")[0]}{" "}
+                            {orderCreate.split("T")[1].split(".")[0]}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {status}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            as="a"
+                            href="#"
+                            variant="small"
+                            color="blue-gray"
+                            className="font-medium"
+                            onClick={() => handleOpen(idOrder)}
+                          >
+                            Tagihan
+                          </Typography>
+                        </td>
+                      </tr>
+                    )
+                  )}
               </tbody>
             </table>
           </Card>
