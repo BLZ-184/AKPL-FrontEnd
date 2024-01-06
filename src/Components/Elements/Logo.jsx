@@ -8,7 +8,6 @@ const Logo = ({ expanded, color = "white", widht }) => {
       height="100%"
       viewBox="-20 0 200 40"
       fill="none"
-      xmlns="https://www.w3.org/2000/svg"
       className={` overflow-hidden transition-all ${
         expanded ? "w-32" : widht ? widht : "w-0"
       }`}
