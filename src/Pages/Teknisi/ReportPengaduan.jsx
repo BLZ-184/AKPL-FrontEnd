@@ -27,8 +27,18 @@ const ReportPengaduan = () => {
   const [open2, setOpen2] = React.useState(false);
   const [userDetail, setUserDetail] = React.useState(null);
   const [orderDetail, setOrderDetail] = React.useState(null);
-  const handleOpen = () => setOpen(!open);
-  const handleOpen2 = () => setOpen2(!open2);
+  const handleOpen = (idpengadu) => {
+    if (open) {
+      console.log(open);
+      handleStatus(idpengadu, "open");
+    }
+    setOpen(!open);
+    getPengaduan();
+  };
+  const handleOpen2 = () => {
+    setOpen2(!open2);
+    getPengaduan();
+  };
   const openChat = async (value) => {
     const response = await axios.get(
       "https://akpl-backend-production.up.railway.app/Pengaduan/" + value
@@ -106,17 +116,21 @@ const ReportPengaduan = () => {
   };
 
   const handleStatus = async (data, value) => {
-    console.log(data);
-    try {
-      const response = await axios.patch(
-        "https://akpl-backend-production.up.railway.app/Pengaduan/" +
-          data +
-          "/" +
-          value
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+    console.log(datadetail[0].status);
+    console.log(datadetail[0].status.includes("Ditanggapi"));
+    console.log(data, value);
+    if (!datadetail[0].status.includes("Ditanggapi")) {
+      try {
+        const response = await axios.patch(
+          "https://akpl-backend-production.up.railway.app/Pengaduan/" +
+            data +
+            "/" +
+            value
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -213,8 +227,7 @@ const ReportPengaduan = () => {
                           className="font-medium"
                           onClick={() => {
                             openChat(idpengadu);
-                            handleStatus(idpengadu, "open");
-                            handleOpen();
+                            handleOpen(idpengadu);
                           }}
                         >
                           Detail
